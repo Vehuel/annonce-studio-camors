@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio rénové — Locoal-Camors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0F0E0C;
+  --paper: #F9F6F0;
+  --sand: #EDE7D9;
+  --clay: #C2825A;
+  --forest: #3D5A47;
+  --mist: #8E9E96;
+  --warm-mid: #6B6257;
+  --accent-light: #F0E9DD;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+/* ── HERO ──────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.hero-texture {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 85%, rgba(61,90,71,0.35) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(194,130,90,0.25) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+}
+.hero-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.025) 60px
+    );
+}
+/* NAV */
+.nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 52px;
+  animation: fadeDown 0.8s ease both;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.nav-ref {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+/* HERO CENTER */
+.hero-center {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 40px 0;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--clay);
+  opacity: 0.6;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 9vw, 110px);
+  font-weight: 300;
+  color: white;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  animation: fadeUp 0.9s ease 0.3s both;
+}
+.hero-title span {
+  display: block;
+  font-style: italic;
+  color: var(--clay);
+}
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 48px;
+  animation: fadeUp 0.9s ease 0.4s both;
+}
+/* PILL STATS */
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  animation: fadeUp 0.9s ease 0.55s both;
+}
+.pill {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.8);
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(6px);
+  transition: background 0.25s, border-color 0.25s;
+}
+.pill:hover {
+  background: rgba(255,255,255,0.13);
+  border-color: rgba(255,255,255,0.22);
+}
+.pill strong {
+  color: white;
+  font-weight: 600;
+}
+/* SCROLL INVITE */
+.hero-bottom {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+  animation: fadeUp 1s ease 0.8s both;
+}
+.scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(194,130,90,0.7));
+  animation: pulseDown 2s ease-in-out infinite;
+}
+.scroll-text {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+@keyframes pulseDown {
+  0%, 100% { transform: scaleY(1); opacity: 0.6; }
+  50% { transform: scaleY(1.15); opacity: 1; }
+}
+/* ── SECTION LAYOUT ──────────────────────────────── */
+.section {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 80px 52px;
+}
+.section-label {
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--clay);
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--clay);
+}
+/* ── INTRO BAND ───────────────────────────────────── */
+.intro-band {
+  background: var(--sand);
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.intro-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 52px;
+  display: grid;
+  grid-template-columns: 1fr 2px 1fr;
+  gap: 52px;
+  align-items: center;
+}
+.intro-divider {
+  background: rgba(0,0,0,0.1);
+  align-self: stretch;
+}
+.intro-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(22px, 3vw, 34px);
+  font-weight: 300;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.intro-quote em {
+  color: var(--clay);
+  font-style: italic;
+}
+.intro-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--warm-mid);
+  font-weight: 300;
+}
+/* ── FEATURES GRID ───────────────────────────────── */
+.feat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(0,0,0,0.06);
+  border: 2px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.feat-item {
+  background: var(--paper);
+  padding: 36px 32px;
+  transition: background 0.25s;
+  position: relative;
+}
+.feat-item:hover {
+  background: var(--accent-light);
+}
+.feat-icon-wrap {
+  width: 44px;
+  height: 44px;
+  background: var(--ink);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+.feat-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+.feat-desc {
+  font-size: 13px;
+  color: var(--mist);
+  line-height: 1.55;
+  font-weight: 300;
+}
+/* ── NATURE STRIP ─────────────────────────────────── */
+.nature-strip {
+  background: var(--forest);
+  position: relative;
+  overflow: hidden;
+}
+.nature-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(255,255,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(0,0,0,0.3) 0%, transparent 50%);
+}
+.nature-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 52px;
+}
+.nature-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: end;
+  margin-bottom: 52px;
+}
+.nature-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 300;
+  color: white;
+  line-height: 1.05;
+}
+.nature-title em { font-style: italic; color: rgba(255,255,255,0.55); }
+.nature-intro {
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.75;
+  font-weight: 300;
+  align-self: end;
+}
+.nature-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.nature-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: background 0.25s, transform 0.25s;
+}
+.nature-card:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-4px);
+}
+.nc-emoji { font-size: 28px; margin-bottom: 14px; display: block; }
+.nc-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 8px;
+}
+.nc-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  font-weight: 300;
+}
+/* ── DISTANCES ───────────────────────────────────── */
+.distances-section {
+  background: var(--paper);
+}
+.distances-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.dist-card {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 12px;
+  padding: 28px 22px;
+  text-align: center;
+  background: white;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  cursor: default;
+}
+.dist-card:hover {
+  border-color: var(--clay);
+  box-shadow: 0 8px 32px rgba(194,130,90,0.12);
+  transform: translateY(-3px);
+}
+.dist-city {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.dist-time {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--clay);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.dist-unit {
+  font-size: 11px;
+  color: var(--mist);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+/* ── PROFILE SECTION ─────────────────────────────── */
+.profile-section {
+  background: var(--sand);
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.profile-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 52px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+  align-items: start;
+}
+.profile-col-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  color: var(--ink);
+}
+.profile-col-title em { font-style: italic; color: var(--clay); }
+.profile-col-body {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--warm-mid);
+  font-weight: 300;
+  margin-bottom: 28px;
+}
+.profile-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pcheck {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.pcheck-dot {
+  width: 20px;
+  height: 20px;
+  background: var(--forest);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.pcheck-dot::after {
+  content: '✓';
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+}
+.garant-box {
+  background: white;
+  border-radius: 14px;
+  padding: 32px;
+  border-left: 4px solid var(--clay);
+}
+.garant-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.garant-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.garant-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--sand);
+  font-size: 14px;
+}
+.garant-item:last-child { border-bottom: none; }
+.gi-label { color: var(--mist); }
+.gi-val { color: var(--ink); font-weight: 500; }
+/* ── CTA ─────────────────────────────────────────── */
+.cta-section {
+  background: var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(194,130,90,0.2), transparent 70%);
+}
+.cta-section::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  right: -60px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(61,90,71,0.25), transparent 70%);
+}
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 80px 52px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 52px;
+  align-items: center;
+}
+.cta-text-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 300;
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.cta-text-title em { font-style: italic; color: var(--clay); }
+.cta-text-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 520px;
+}
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  min-width: 220px;
+}
+.btn-primary {
+  background: var(--clay);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 18px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  text-align: center;
+}
+.btn-primary:hover {
+  background: #b5713f;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(194,130,90,0.35);
+}
+.btn-secondary {
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 16px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  text-align: center;
+}
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.45);
+  color: white;
+  background: rgba(255,255,255,0.05);
+}
+/* ── FOOTER ──────────────────────────────────────── */
+footer {
+  background: #080807;
+  padding: 28px 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-left {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.footer-right {
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 1.5px;
+}
+/* ── ANIMATIONS ─────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media (max-width: 820px) {
+  .nav { padding: 20px 24px; }
+  .section { padding: 52px 24px; }
+  .intro-inner { grid-template-columns: 1fr; gap: 28px; padding: 40px 24px; }
+  .intro-divider { display: none; }
+  .feat-grid { grid-template-columns: 1fr 1fr; }
+  .nature-inner { padding: 52px 24px; }
+  .nature-header { grid-template-columns: 1fr; gap: 20px; }
+  .nature-cards { grid-template-columns: 1fr; }
+  .distances-grid { grid-template-columns: repeat(2, 1fr); padding: 40px 24px; }
+  .profile-inner { padding: 52px 24px; }
+  .profile-grid { grid-template-columns: 1fr; gap: 32px; }
+  .cta-inner { grid-template-columns: 1fr; padding: 52px 24px; gap: 32px; }
+  .cta-actions { flex-direction: row; }
+  footer { flex-direction: column; gap: 10px; text-align: center; padding: 24px; }
+}
+</style>
+</head>
+<body>
+<!-- ── HERO ─────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-lines"></div>
+  <nav class="nav">
+    <div class="nav-logo">Immobilier · Morbihan</div>
+    <div class="nav-ref">Locoal-Camors · 56</div>
+  </nav>
+  <div class="hero-center">
+    <div class="hero-eyebrow">Studio · 17 m² · Rénové à neuf</div>
+    <h1 class="hero-title">
+      Votre prochain
+      <span>chez-soi</span>
+    </h1>
+    <p class="hero-subtitle">au cœur de la Bretagne intérieure</p>
+    <div class="hero-pills">
+      <div class="pill"><strong>Lumineux</strong></div>
+      <div class="pill">Cuisine équipée</div>
+      <div class="pill">Salle d'eau neuve</div>
+      <div class="pill"><strong>Fibre disponible</strong></div>
+      <div class="pill">Copropriété sécurisée</div>
+      <div class="pill">Eau chaude thermodynamique</div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="scroll-cue" onclick="document.querySelector('.intro-band').scrollIntoView({behavior:'smooth'})">
+      <div class="scroll-line"></div>
+      <div class="scroll-text">Découvrir</div>
+    </div>
+  </div>
+</section>
+<!-- ── INTRO ─────────────────────────────────────────── -->
+<div class="intro-band">
+  <div class="intro-inner">
+    <div class="intro-quote reveal">
+      Un studio <em>entièrement rénové,</em><br>
+      prêt à vivre — sans rien à faire.
+    </div>
+    <div class="intro-divider"></div>
+    <div class="intro-body reveal">
+      Situé au sein d'une copropriété bien entretenue et sécurisée à Locoal-Camors, ce studio de 17 m² lumineux a été intégralement remis à neuf. Cuisine équipée, salle d'eau refaite, chauffage individuel, eau chaude thermodynamique, fibre disponible… Tout a été pensé pour un confort immédiat, sans surprise.
+    </div>
+  </div>
+</div>
+<!-- ── ÉQUIPEMENTS ───────────────────────────────────── -->
+<section class="section">
+  <div class="section-label">Équipements & prestations</div>
+  <div class="feat-grid reveal">
+    <div class="feat-item">
+      <div class="feat-icon-wrap">🍳</div>
+      <div class="feat-name">Cuisine équipée</div>
+      <div class="feat-desc">Entièrement refaite, fonctionnelle et prête à l'emploi dès votre emménagement.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon-wrap">🚿</div>
+      <div class="feat-name">Salle d'eau neuve</div>
+      <div class="feat-desc">Rénovée intégralement, contemporaine, propre et soignée.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon-wrap">⚡</div>
+      <div class="feat-name">Chauffage individuel</div>
+      <div class="feat-desc">Électrique et autonome. Vous contrôlez votre consommation, personne d'autre.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon-wrap">💧</div>
+      <div class="feat-name">Eau chaude thermodynamique</div>
+      <div class="feat-desc">Système performant et économique pour vos charges au quotidien.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon-wrap">🔒</div>
+      <div class="feat-name">Digicode & sécurité</div>
+      <div class="feat-desc">Accès sécurisé à la copropriété, bien entretenue et calme.</div>
+    </div>
+    <div class="feat-item">
+      <div class="feat-icon-wrap">📶</div>
+      <div class="feat-name">Fibre disponible</div>
+      <div class="feat-desc">Connexion haut débit à portée. Télétravail, streaming, tout est possible.</div>
+    </div>
+  </div>
+</section>
+<!-- ── NATURE ─────────────────────────────────────────── -->
+<div class="nature-strip">
+  <div class="nature-inner">
+    <div class="nature-header">
+      <h2 class="nature-title reveal">
+        La nature,<br>
+        <em>à portée de porte</em>
+      </h2>
+      <p class="nature-intro reveal">
+        Locoal-Camors, c'est un cadre de vie rare en Bretagne : forêts, loisirs en plein air, calme absolu. Un environnement qui ressource, loin de l'agitation des grandes villes — mais jamais loin d'elles.
+      </p>
+    </div>
+    <div class="nature-cards">
+      <div class="nature-card reveal">
+        <span class="nc-emoji">🌲</span>
+        <div class="nc-title">Ludana Parc Aventure</div>
+        <div class="nc-desc">Accrobranche, laser game, explor games au cœur de la forêt de Camors. Parfait pour souffler le week-end.</div>
+      </div>
+      <div class="nature-card reveal">
+        <span class="nc-emoji">🌿</span>
+        <div class="nc-title">Arboretum de Camors</div>
+        <div class="nc-desc">En plein cœur de la forêt domaniale. Idéal pour les promenades, la détente et les amoureux de nature.</div>
+      </div>
+      <div class="nature-card reveal">
+        <span class="nc-emoji">🍃</span>
+        <div class="nc-title">Forêt & Bois de Floranges</div>
+        <div class="nc-desc">Un cadre verdoyant et préservé. Sentiers, silence, et grand air — à deux pas de votre logement.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ── DISTANCES ──────────────────────────────────────── -->
+<section class="section distances-section">
+  <div class="section-label">Proximité & mobilité</div>
+  <div class="distances-grid">
+    <div class="dist-card reveal">
+      <div class="dist-city">Baud</div>
+      <div class="dist-time">4</div>
+      <div class="dist-unit">minutes</div>
+    </div>
+    <div class="dist-card reveal">
+      <div class="dist-city">Auray</div>
+      <div class="dist-time">25</div>
+      <div class="dist-unit">minutes</div>
+    </div>
+    <div class="dist-card reveal">
+      <div class="dist-city">Vannes</div>
+      <div class="dist-time">~30</div>
+      <div class="dist-unit">minutes</div>
+    </div>
+    <div class="dist-card reveal">
+      <div class="dist-city">Lorient</div>
+      <div class="dist-time">~30</div>
+      <div class="dist-unit">minutes</div>
+    </div>
+  </div>
+  <div style="margin-top:28px; text-align:center; font-size:13px; color:var(--mist); font-style:italic;">
+    Transports en commun disponibles · École, collège, lycée à proximité · Associations et bibliothèque locales
+  </div>
+</section>
+<!-- ── PROFIL ─────────────────────────────────────────── -->
+<div class="profile-section">
+  <div class="profile-inner">
+    <div class="section-label">Le logement vous correspond si…</div>
+    <div class="profile-grid">
+      <div>
+        <h2 class="profile-col-title reveal">
+          Vous cherchez<br>
+          la <em>tranquillité</em><br>
+          sans l'isolement.
+        </h2>
+        <p class="profile-col-body reveal">
+          Ce studio s'adresse à quelqu'un de sérieux, qui prend soin de son logement et apprécie un cadre de qualité. Que vous travailliez localement, à distance ou dans l'une des villes voisines, vous trouverez ici un vrai chez-vous — sans compromis sur le confort.
+        </p>
+        <div class="profile-checks reveal">
+          <div class="pcheck"><div class="pcheck-dot"></div>Vous aimez la tranquillité et la nature au quotidien</div>
+          <div class="pcheck"><div class="pcheck-dot"></div>Vous recherchez un logement propre, moderne et sans travaux</div>
+          <div class="pcheck"><div class="pcheck-dot"></div>Vous êtes salarié(e), en télétravail ou proche d'un bassin d'emploi</div>
+          <div class="pcheck"><div class="pcheck-dot"></div>Vous avez le sens du respect du voisinage et de la copropriété</div>
+        </div>
+      </div>
+      <div class="garant-box reveal">
+        <div class="garant-title">Dossier attendu</div>
+        <div class="garant-items">
+          <div class="garant-item">
+            <span class="gi-label">Justificatif d'identité</span>
+            <span class="gi-val">Requis</span>
+          </div>
+          <div class="garant-item">
+            <span class="gi-label">Justificatifs de revenus</span>
+            <span class="gi-val">3 derniers bulletins</span>
+          </div>
+          <div class="garant-item">
+            <span class="gi-label">Avis d'imposition</span>
+            <span class="gi-val">Dernier en date</span>
+          </div>
+          <div class="garant-item">
+            <span class="gi-label">Garant possible</span>
+            <span class="gi-val">Accepté</span>
+          </div>
+          <div class="garant-item">
+            <span class="gi-label">Visale / garanties</span>
+            <span class="gi-val">Bienvenu(e)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ── CTA ─────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div>
+      <h2 class="cta-text-title reveal">
+        Prêt(e) à<br>
+        <em>passer le cap ?</em>
+      </h2>
+      <p class="cta-text-sub reveal">
+        Ce studio ne restera pas longtemps disponible. Prenez contact maintenant pour obtenir toutes les informations, organiser une visite ou déposer votre dossier.
+      </p>
+    </div>
+    <div class="cta-actions reveal">
+      <button class="btn-primary">📩 Envoyer ma candidature</button>
+      <button class="btn-secondary">📞 Demander une visite</button>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="footer-left">Studio · Locoal-Camors</div>
+  <div class="footer-right">Morbihan (56) · Location vide · ~17 m² · Rénové à neuf</div>
+</footer>
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

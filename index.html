@@ -615,6 +615,206 @@ footer {
   color: rgba(255,255,255,0.2);
   letter-spacing: 1.5px;
 }
+/* ── BOUTON TÉLÉPHONE ────────────────────────────── */
+.btn-phone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  position: relative;
+}
+.btn-phone .phone-reveal {
+  display: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.btn-phone:hover .phone-default { display: none; }
+.btn-phone:hover .phone-reveal { display: inline; }
+
+/* ── MODAL FORMULAIRE ────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,14,12,0.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--paper);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  animation: modalUp 0.4s ease both;
+  overflow: hidden;
+}
+@keyframes modalUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.modal-head {
+  background: var(--ink);
+  padding: 28px 32px;
+  position: relative;
+}
+.modal-head h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 300;
+  color: white;
+  line-height: 1.1;
+}
+.modal-head h3 em { font-style: italic; color: var(--clay); }
+.modal-head p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 6px;
+  font-weight: 300;
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  line-height: 1;
+}
+.modal-close:hover { background: rgba(255,255,255,0.1); color: white; }
+.modal-body { padding: 28px 32px 32px; }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-field { display: flex; flex-direction: column; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--warm-mid);
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+.form-field label .req { color: var(--clay); }
+.form-field input,
+.form-field select,
+.form-field textarea {
+  font-family: 'Outfit', sans-serif;
+  font-size: 14px;
+  color: var(--ink);
+  background: white;
+  border: 1px solid rgba(0,0,0,0.15);
+  border-radius: 8px;
+  padding: 11px 13px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--clay);
+  box-shadow: 0 0 0 3px rgba(194,130,90,0.15);
+}
+.form-field textarea { resize: vertical; min-height: 80px; }
+.rgpd-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--sand);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 4px 0 20px;
+}
+.rgpd-box input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  accent-color: var(--clay);
+  cursor: pointer;
+}
+.rgpd-box label {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--warm-mid);
+  cursor: pointer;
+}
+.modal-submit {
+  width: 100%;
+  background: var(--clay);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.modal-submit:hover { background: #b5713f; transform: translateY(-2px); }
+.modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.form-msg {
+  font-size: 13px;
+  margin-top: 14px;
+  text-align: center;
+  display: none;
+}
+.form-msg.error { color: #c0392b; display: block; }
+.form-success {
+  text-align: center;
+  padding: 24px 8px;
+  display: none;
+}
+.form-success.show { display: block; }
+.form-success .check {
+  width: 56px;
+  height: 56px;
+  background: var(--forest);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-size: 28px;
+  color: white;
+}
+.form-success h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.form-success p {
+  font-size: 14px;
+  color: var(--warm-mid);
+  line-height: 1.6;
+  font-weight: 300;
+}
+@media (max-width: 560px) {
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .form-row .form-field { margin-bottom: 16px; }
+  .modal-head { padding: 24px; }
+  .modal-body { padding: 24px; }
+}
+
 /* ── ANIMATIONS ─────────────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(28px); }
@@ -855,8 +1055,11 @@ footer {
       </p>
     </div>
     <div class="cta-actions reveal">
-      <button class="btn-primary">📩 Envoyer ma candidature</button>
-      <button class="btn-secondary">📞 Demander une visite</button>
+      <button class="btn-primary" onclick="openForm()">📩 Envoyer ma candidature</button>
+      <a class="btn-secondary btn-phone" href="tel:0605982841">
+        <span class="phone-default">📞 Demander une visite</span>
+        <span class="phone-reveal">📞 06 05 98 28 41</span>
+      </a>
     </div>
   </div>
 </section>
@@ -864,7 +1067,186 @@ footer {
   <div class="footer-left">Studio · Locoal-Camors</div>
   <div class="footer-right">Morbihan (56) · Location vide · ~17 m² · Rénové à neuf</div>
 </footer>
+<!-- ── MODAL CANDIDATURE ───────────────────────────── -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeForm()" aria-label="Fermer">×</button>
+      <h3>Déposer ma <em>candidature</em></h3>
+      <p>Studio ~17 m² · Locoal-Camors (56) · Les dossiers complets sont étudiés en priorité.</p>
+    </div>
+    <div class="modal-body">
+      <form id="candidatureForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label>Civilité <span class="req">*</span></label>
+            <select name="civilite" required>
+              <option value="">—</option>
+              <option>M.</option>
+              <option>Mme</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Nombre d'occupants <span class="req">*</span></label>
+            <input type="number" name="nb_occupants" min="1" max="10" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Prénom <span class="req">*</span></label>
+            <input type="text" name="prenom" required>
+          </div>
+          <div class="form-field">
+            <label>Nom <span class="req">*</span></label>
+            <input type="text" name="nom" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Email <span class="req">*</span></label>
+            <input type="email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label>Téléphone <span class="req">*</span></label>
+            <input type="tel" name="telephone" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Situation professionnelle <span class="req">*</span></label>
+            <select name="situation_pro" required>
+              <option value="">—</option>
+              <option>CDI</option>
+              <option>CDD</option>
+              <option>Intérim</option>
+              <option>Fonctionnaire</option>
+              <option>Étudiant(e)</option>
+              <option>Retraité(e)</option>
+              <option>Indépendant / Profession libérale</option>
+              <option>Sans emploi</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Employeur / École</label>
+            <input type="text" name="employeur">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Revenus mensuels nets (€) <span class="req">*</span></label>
+            <input type="number" name="revenus_mensuels" min="0" step="50" required>
+          </div>
+          <div class="form-field">
+            <label>Date d'emménagement souhaitée</label>
+            <input type="date" name="date_emmenagement">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Avez-vous un garant ? <span class="req">*</span></label>
+            <select name="garant" required>
+              <option value="">—</option>
+              <option>Oui</option>
+              <option>Non</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Type de garantie</label>
+            <select name="type_garant">
+              <option value="">—</option>
+              <option>Garant physique</option>
+              <option>Visale</option>
+              <option>Autre garantie</option>
+              <option>Aucune</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field full">
+            <label>Message (facultatif)</label>
+            <textarea name="message" maxlength="2000" placeholder="Présentez-vous en quelques mots, posez vos questions…"></textarea>
+          </div>
+        </div>
+        <div class="rgpd-box">
+          <input type="checkbox" id="rgpd" name="rgpd_consent" required>
+          <label for="rgpd">
+            J'accepte que mes informations soient utilisées uniquement pour l'étude de ma candidature à ce logement.
+            Elles ne sont jamais transmises à des tiers et sont <strong>automatiquement supprimées au bout de 90 jours</strong>.
+            Je peux demander leur suppression à tout moment. <span class="req">*</span>
+          </label>
+        </div>
+        <button type="submit" class="modal-submit" id="submitBtn">Envoyer ma candidature</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="check">✓</div>
+        <h4>Candidature envoyée !</h4>
+        <p>Merci, votre dossier a bien été transmis. Les candidatures sérieuses sont étudiées en priorité — vous serez recontacté(e) rapidement.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // ── Supabase ──
+  const SUPABASE_URL = 'https://zmosymvnefrhedtgvxfh.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_L4oMFI15HChLvQ9YDj9TKg_HdijuYPS';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const modal = document.getElementById('formModal');
+  function openForm() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeForm() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeForm(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeForm(); });
+
+  document.getElementById('candidatureForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const msg = document.getElementById('formMsg');
+    msg.className = 'form-msg';
+    msg.textContent = '';
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours…';
+
+    const f = e.target;
+    const payload = {
+      civilite: f.civilite.value,
+      nom: f.nom.value.trim(),
+      prenom: f.prenom.value.trim(),
+      email: f.email.value.trim(),
+      telephone: f.telephone.value.trim(),
+      situation_pro: f.situation_pro.value,
+      employeur: f.employeur.value.trim() || null,
+      revenus_mensuels: f.revenus_mensuels.value ? Number(f.revenus_mensuels.value) : null,
+      garant: f.garant.value,
+      type_garant: f.type_garant.value || null,
+      nb_occupants: f.nb_occupants.value ? Number(f.nb_occupants.value) : null,
+      date_emmenagement: f.date_emmenagement.value || null,
+      message: f.message.value.trim() || null,
+      rgpd_consent: f.rgpd_consent.checked
+    };
+
+    const { error } = await sb.from('candidatures').insert(payload);
+
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = 'Envoyer ma candidature';
+      msg.className = 'form-msg error';
+      msg.textContent = "Une erreur est survenue. Réessayez ou appelez le 06 05 98 28 41.";
+      console.error(error);
+      return;
+    }
+    f.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  });
+
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {

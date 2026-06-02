@@ -292,6 +292,103 @@ body {
   line-height: 1.55;
   font-weight: 300;
 }
+.feat-item.feat-wide {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.feat-item.feat-wide .feat-icon-wrap { margin-bottom: 0; flex-shrink: 0; }
+.feat-item.feat-wide .feat-name { margin-bottom: 2px; }
+
+/* ── DIAPORAMA ───────────────────────────────────── */
+.gallery-section { background: var(--paper); }
+.slider {
+  position: relative;
+  max-width: 920px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+.slides {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.slide.active { opacity: 1; }
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(15,14,12,0.55);
+  color: white;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+  z-index: 2;
+}
+.slider-btn:hover { background: var(--clay); }
+.slider-btn.prev { left: 16px; }
+.slider-btn.next { right: 16px; }
+.slider-counter {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(15,14,12,0.55);
+  color: white;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.18);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  padding: 0;
+}
+.dot.active { background: var(--clay); transform: scale(1.25); }
+@media (max-width: 560px) {
+  .slider-btn { width: 38px; height: 38px; font-size: 18px; }
+  .slider-btn.prev { left: 8px; }
+  .slider-btn.next { right: 8px; }
+}
+
 /* ── NATURE STRIP ─────────────────────────────────── */
 .nature-strip {
   background: var(--forest);
@@ -931,7 +1028,28 @@ footer {
       <div class="feat-name">Fibre disponible</div>
       <div class="feat-desc">Connexion haut débit à portée. Télétravail, streaming, tout est possible.</div>
     </div>
+    <div class="feat-item feat-wide">
+      <div class="feat-icon-wrap">🗝️</div>
+      <div class="feat-name">Cave privative de 5 m²</div>
+      <div class="feat-desc">Espace de rangement sécurisé avec porte métal — idéal pour vélo, cartons et affaires saisonnières.</div>
+    </div>
   </div>
+</section>
+<!-- ── DIAPORAMA ─────────────────────────────────────── -->
+<section class="section gallery-section">
+  <div class="section-label">Visite en images</div>
+  <div class="slider reveal" id="slider">
+    <div class="slides">
+      <div class="slide active"><img src="photos/1.jpg" alt="Studio Locoal-Camors — photo 1" loading="lazy"></div>
+      <div class="slide"><img src="photos/2.jpg" alt="Studio Locoal-Camors — photo 2" loading="lazy"></div>
+      <div class="slide"><img src="photos/3.jpg" alt="Studio Locoal-Camors — photo 3" loading="lazy"></div>
+      <div class="slide"><img src="photos/4.jpg" alt="Studio Locoal-Camors — photo 4" loading="lazy"></div>
+    </div>
+    <div class="slider-counter" id="sliderCounter">1 / 4</div>
+    <button class="slider-btn prev" id="prevBtn" aria-label="Photo précédente">‹</button>
+    <button class="slider-btn next" id="nextBtn" aria-label="Photo suivante">›</button>
+  </div>
+  <div class="slider-dots" id="sliderDots"></div>
 </section>
 <!-- ── NATURE ─────────────────────────────────────────── -->
 <div class="nature-strip">
@@ -1274,6 +1392,48 @@ footer {
     f.style.display = 'none';
     document.getElementById('formSuccess').classList.add('show');
   });
+
+  // ── Diaporama ──
+  (() => {
+    const slides = document.querySelectorAll('.slide');
+    if (!slides.length) return;
+    const dotsWrap = document.getElementById('sliderDots');
+    const counter = document.getElementById('sliderCounter');
+    const total = slides.length;
+    let idx = 0;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Aller à la photo ' + (i + 1));
+      d.addEventListener('click', () => go(i, true));
+      dotsWrap.appendChild(d);
+    });
+    const dots = dotsWrap.querySelectorAll('.dot');
+
+    function go(n, manual) {
+      slides[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = (n + total) % total;
+      slides[idx].classList.add('active');
+      dots[idx].classList.add('active');
+      counter.textContent = (idx + 1) + ' / ' + total;
+      if (manual) restart();
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => go(idx - 1, true));
+    document.getElementById('nextBtn').addEventListener('click', () => go(idx + 1, true));
+
+    let timer = setInterval(() => go(idx + 1), 5000);
+    function restart() { clearInterval(timer); timer = setInterval(() => go(idx + 1), 5000); }
+    const slider = document.getElementById('slider');
+    slider.addEventListener('mouseenter', () => clearInterval(timer));
+    slider.addEventListener('mouseleave', restart);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(idx - 1, true);
+      if (e.key === 'ArrowRight') go(idx + 1, true);
+    });
+  })();
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
